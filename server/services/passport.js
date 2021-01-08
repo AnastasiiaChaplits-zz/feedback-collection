@@ -18,10 +18,12 @@ passport.use(
       }).then((existingUser) => {
         if (existingUser) {
           // have a record with given profile id
+          done(null, existingUser);
         } else {
-          new User({
-            googleId: profile.id
-          }).save();
+          // we do not have a record with this profile id
+          new User({ googleId: profile.id })
+            .save()
+            .then((user) => done(null, user));
         }
       });
     }
