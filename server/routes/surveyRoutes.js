@@ -20,5 +20,14 @@ module.exports = (app) => {
     });
 
     const mailer = new Mailer(survey, surveyTemplate(survey));
+    mailer
+      .send()
+      .then(() => {
+        console.log('Message sent');
+      })
+      .catch((error) => {
+        console.log(error.response.body);
+        // console.log(error.response.body.errors[0].message)
+      });
   });
 };
